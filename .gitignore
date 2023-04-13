@@ -1,2 +1,5 @@
 
 .DS_Store
+__pycache__/vacancies.cpython-310.pyc
+.idea
+/venv
