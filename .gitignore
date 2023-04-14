@@ -30,3 +30,4 @@ lib/python3.10/site-packages/terminaltables-3.1.10.dist-info/LICENSE
 lib/python3.10/site-packages/terminaltables-3.1.10.dist-info/INSTALLER
 lib/python3.10/site-packages/terminaltables-3.1.10.dist-info/entry_points.txt
 __pycache__/super_job.cpython-310.pyc
+.env
