@@ -3,7 +3,6 @@ import os
 import requests
 import pprint
 import statistics
-import itertools
 
 from dotenv import load_dotenv
 
