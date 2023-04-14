@@ -24,22 +24,22 @@ def load_vacancies(vacancy='Python'):
 
 
 def predict_rub_salary(vacancy_name):
-    vacancies_pages = load_vacancies()
-    result = []
+    vacancies_pages = load_vacancies(vacancy_name)
+    salaries = []
     for vacancies in vacancies_pages:
         for index, vacancy in enumerate(vacancies['items']):
             if vacancy['salary'] is None:
                 continue
             if vacancy['salary']['currency'] !='RUR':
-                # result.append(None)
                 continue
             if vacancy['salary']['from'] is None:
-                result.append(int(vacancy['salary']['to'])*0.8)
+                salaries.append(int(vacancy['salary']['to'])*0.8)
             elif vacancy['salary']['to'] is None:
-                result.append(int(vacancy['salary']['from']) * 1.2)
+                salaries.append(int(vacancy['salary']['from']) * 1.2)
             else:
-                result.append((int(vacancy['salary']['from'])+int(vacancy['salary']['to']))/2)
-    return result
+                salaries.append((int(vacancy['salary']['from'])+int(vacancy['salary']['to']))/2)
+    return salaries
+
 
 def main():
     cost = predict_rub_salary('Python')

@@ -1,7 +1,6 @@
 
-import os
-import vacancies
-import pprint
+
+import head_hunter
 
 
 
@@ -9,9 +8,9 @@ from dotenv import load_dotenv
 
 
 def main():
-    vacan = vacancies.load_vacancies()
-    for v in vacan['items']:
-        print(v['salary'])
+    vacancies = head_hunter.load_vacancies()
+    for vacancy in vacancies['items']:
+        print(vacancy['salary'])
 
 
 
