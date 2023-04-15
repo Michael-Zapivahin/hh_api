@@ -1,6 +1,6 @@
 # Statistic by vacancies
 
-Program downloads statistic by vacancies from [hh.ru](https://hh.ru/) and [Superjob.ru](https://www.superjob.ru/)
+Program downloads statistic by vacancies from [hh.ru](https://hh.ru/) and [Superjob.ru](https://www.superjob.ru/).
 
 ## How to install
 
@@ -11,13 +11,11 @@ Use pip or pip3, if there is a conflict with Python2) to install dependencies:
 pip install -r requirements.txt
 ```
 
-
-
 ## Program uses an environment variable
 
 #### Variables:
 
-`SJ_TOKEN` [Cекретный ключ (Secret key) вашего приложения.](https://api.superjob.ru/)
+`SJ_TOKEN` [Cекретный ключ (Secret key) вашего приложения.](https://api.superjob.ru/).
 
 ## How to run scripts
 
@@ -26,4 +24,4 @@ python main.py
 ```
 
 ## The aim of the project 
-The code is written for educational purposes on the online course for web developers [Devman практика Python](https://dvmn.org/)
+The code is written for educational purposes on the online course for web developers [Devman практика Python](https://dvmn.org/).
