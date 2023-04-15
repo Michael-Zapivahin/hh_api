@@ -4,20 +4,20 @@ import requests
 import pprint
 import statistics
 
+
 from dotenv import load_dotenv
 
 
 def predict_rub_salary(vacancy):
-    if vacancy['currency'] == 'rub':
-        salary_from = vacancy['payment_from']
-        if salary_from == 0:
-            salary_from = None
-        salary_to = vacancy['payment_to']
-        if salary_to == 0:
-            salary_to = None
-        return predict_salary(salary_from, salary_to)
-    else:
+    if vacancy['currency'] != 'rub':
         return None
+    salary_from = vacancy['payment_from']
+    if salary_from == 0:
+        salary_from = None
+    salary_to = vacancy['payment_to']
+    if salary_to == 0:
+        salary_to = None
+    return predict_salary(salary_from, salary_to)
 
 
 def predict_salary(salary_from, salary_to):
@@ -31,7 +31,7 @@ def predict_salary(salary_from, salary_to):
         return statistics.mean([salary_from, salary_to])
 
 
-def get_vacancies(token, language, catalogues=33, count_per_page=100, town=14, page = 1):
+def get_vacancies(token, language, catalogues=33, count_per_page=100, town=14, page=1):
     host = 'https://api.superjob.ru/2.0/vacancies/'
     headers = {
         'X-Api-App-Id': token,
@@ -50,7 +50,7 @@ def get_vacancies(token, language, catalogues=33, count_per_page=100, town=14, p
 
 
 def get_statistic(token, languages, catalogues=33, town=14):
-    language_stat = {}
+    languages_statistic = {}
     count_per_page = 100
     for language in languages:
         vacancies = []
@@ -63,18 +63,18 @@ def get_statistic(token, languages, catalogues=33, town=14):
             for vacancy in vacancies_page['objects']:
                 vacancies.append(vacancy)
                 vacancy_salary = predict_rub_salary(vacancy)
-                if not vacancy_salary is None:
+                if vacancy_salary:
                     vacancies_salaries.append(vacancy_salary)
         if len(vacancies_salaries):
             average_salary = int(statistics.mean(vacancies_salaries))
         else:
             average_salary = 0
-        language_stat[language] = {
+        languages_statistic[language] = {
             'vacancies_found': len(vacancies),
             'vacancies_processed': len(vacancies_salaries),
             'average_salary': average_salary
         }
-    return language_stat
+    return languages_statistic
 
 
 def main():

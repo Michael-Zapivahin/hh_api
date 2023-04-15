@@ -3,42 +3,43 @@ import requests
 import super_job
 import statistics
 
-def load_vacancies(vacancy='Python'):
+
+def get_vacancies(vacancy='Python'):
+    REQUEST_PERIOD = 30
     page = -1
     pages_number = 1
-    result = []
+    vacancies = []
     while page < pages_number:
         page += 1
         url = 'https://api.hh.ru/vacancies'
         payload = {
             'text': vacancy,
             'city': 'Москва',
-            'period': '30',
+            'period': f'{REQUEST_PERIOD}',
             'page': page
         }
         response = requests.get(url, params=payload)
         response.raise_for_status()
         page_payload = response.json()
         pages_number = min(5, page_payload['pages'])
-        result.append(page_payload)
-    return result
+        vacancies.append(page_payload)
+    return vacancies
 
 
 def predict_rub_salary(vacancy):
-    if vacancy['currency'] == 'RUR':
-        salary_from = vacancy['from']
-        if salary_from == 0:
-            salary_from = None
-        salary_to = vacancy['to']
-        if salary_to == 0:
-            salary_to = None
-        return super_job.predict_salary(salary_from, salary_to)
-    else:
+    if vacancy['currency'] != 'RUR':
         return None
+    salary_from = vacancy['from']
+    if salary_from == 0:
+        salary_from = None
+    salary_to = vacancy['to']
+    if salary_to == 0:
+        salary_to = None
+    return super_job.predict_salary(salary_from, salary_to)
 
 
-def get_salaries(vacancy_name):
-    vacancies_pages = load_vacancies(vacancy_name)
+def get_language_statistic(vacancy_name):
+    vacancies_pages = get_vacancies(vacancy_name)
     salaries = []
     vacancies_found = 0
     for vacancies in vacancies_pages:
@@ -62,10 +63,10 @@ def get_salaries(vacancy_name):
 
 
 def get_statistic(languages):
-    language_stat = {}
+    languages_statistic = {}
     for language in languages:
-        language_stat[language] = get_salaries(language)
-    return language_stat
+        languages_statistic[language] = get_language_statistic(language)
+    return languages_statistic
 
 
 def main():
