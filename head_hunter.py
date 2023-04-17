@@ -5,7 +5,7 @@ import statistics
 
 
 def get_vacancies(vacancy='Python'):
-    REQUEST_PERIOD = 30
+    request_period = 30
     page = -1
     pages_number = 1
     vacancies = []
@@ -15,7 +15,7 @@ def get_vacancies(vacancy='Python'):
         payload = {
             'text': vacancy,
             'city': 'Москва',
-            'period': f'{REQUEST_PERIOD}',
+            'period': f'{request_period}',
             'page': page
         }
         response = requests.get(url, params=payload)
@@ -30,10 +30,10 @@ def predict_rub_salary(vacancy):
     if vacancy['currency'] != 'RUR':
         return None
     salary_from = vacancy['from']
-    if salary_from == 0:
+    if not salary_from:
         salary_from = None
     salary_to = vacancy['to']
-    if salary_to == 0:
+    if not salary_to:
         salary_to = None
     return super_job.predict_salary(salary_from, salary_to)
 
@@ -45,7 +45,7 @@ def get_language_statistic(vacancy_name):
     for vacancies in vacancies_pages:
         for index, vacancy in enumerate(vacancies['items']):
             vacancies_found += 1
-            if vacancy['salary'] is None:
+            if not vacancy['salary']:
                 continue
             if vacancy['salary']['currency'] != 'RUR':
                 continue

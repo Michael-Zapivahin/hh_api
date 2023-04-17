@@ -12,10 +12,10 @@ def predict_rub_salary(vacancy):
     if vacancy['currency'] != 'rub':
         return None
     salary_from = vacancy['payment_from']
-    if salary_from == 0:
+    if not salary_from:
         salary_from = None
     salary_to = vacancy['payment_to']
-    if salary_to == 0:
+    if not salary_to:
         salary_to = None
     return predict_salary(salary_from, salary_to)
 

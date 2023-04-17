@@ -9,10 +9,10 @@ from dotenv import load_dotenv
 
 
 def print_statistic(title, statistic):
-    print_data = []
-    print_data.append(['Язык программирования', 'Вакансий найдено', 'Вакансий обработано', 'Средняя зарплата'])
+    statistic_salaries = []
+    statistic_salaries.append(['Язык программирования', 'Вакансий найдено', 'Вакансий обработано', 'Средняя зарплата'])
     for index, language in enumerate(statistic):
-        print_data.append(
+        statistic_salaries.append(
             [
                 language,
                 statistic[language]['vacancies_found'],
@@ -20,7 +20,7 @@ def print_statistic(title, statistic):
                 statistic[language]['average_salary'],
             ]
         )
-    table = AsciiTable(print_data, title)
+    table = AsciiTable(statistic_salaries, title)
     print(table.table)
 
 
